@@ -217,9 +217,5 @@ class _LoginPageState extends State<LoginPage> {
     } else {
       _showMsg(body['message']);
     }
-
-    setState(() {
-      _isLoading = false;
-    });
   }
 }

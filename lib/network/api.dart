@@ -4,7 +4,7 @@ import 'api_const.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Network {
-  final String _url = 'http://10.0.2.2:8000/api';
+  final String _url = 'http://192.168.8.100:8000/api';
   var token;
 
   Response response;
@@ -30,14 +30,18 @@ class Network {
 
   authData(data, apiUrl) async {
     var fullUrl = _url + apiUrl;
+    await _getToken();
     FormData formData = new FormData.fromMap(data);
     response = await dio.post(
       fullUrl,
       data: formData,
-
+      options: new Options(
+        headers: _setHeaders(),
+      ),
     );
     return response;
   }
+
 
   getData(apiUrl) async {
     var fullUrl = _url + apiUrl;

@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'package:emphaty/network/api.dart';
+import 'package:emphaty/src/data/list_bantuan.dart';
+import 'package:emphaty/src/data/list_post.dart';
 import 'package:emphaty/src/pages/login_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -96,24 +98,8 @@ class _HomePageState extends State<HomePage> {
           SizedBox(
             height: 20.0,
           ),
-          Padding(
-            padding:
-                const EdgeInsets.only(right: 10.0, left: 10.0, bottom: 10.0),
-            child: Text(
-              "Post Terdekat",
-              style: TextStyle(
-                fontSize: 20.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          NearestPost(),
-          SizedBox(
-            height: 20.0,
-          ),
-          Column(
-            children: _posts.map(_buildPostItem).toList(),
-          ),
+          
+          ListPost(),
         ],
       ),
     );

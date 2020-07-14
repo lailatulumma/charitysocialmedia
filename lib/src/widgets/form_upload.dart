@@ -16,13 +16,11 @@ class FormUpload extends StatefulWidget {
 
 class _FormUploadState extends State<FormUpload> {
   bool _isLoading = false;
-  final _target = TargetBantuan();
   final formKey = new GlobalKey<FormState>();
 
   var name,
       age,
       address,
-      condition_economy,
       last_education,
       history_disease,
       description,
@@ -31,7 +29,7 @@ class _FormUploadState extends State<FormUpload> {
   File imageFile;
 
   _openCamera(BuildContext context) async {
-    var picture = await ImagePicker.pickImage(source: ImageSource.gallery);
+    var picture = await ImagePicker.pickImage(source: ImageSource.camera);
     this.setState(() {
       imageFile = picture;
     });
@@ -161,28 +159,7 @@ class _FormUploadState extends State<FormUpload> {
               ),
               SizedBox(height: 20.0),
               Text('Kategori Bantuan'),
-              // new TextFormField(
-              //   decoration: new InputDecoration(
-              //     labelText: 'Disabilitas (Ya/Tidak)',
-              //   ),
-              //   validator: (val) {
-
-              //     co = val;
-              //     return null;
-              //   },
-              // ),
-              new TextFormField(
-                decoration: new InputDecoration(
-                  labelText: 'Ekonomi Rendah (Ya/Tidak)',
-                ),
-                validator: (val) {
-                  if (val.isEmpty) {
-                    return 'Bagaimana Kondisi Ekonomi';
-                  }
-                  condition_economy = val;
-                  return null;
-                },
-              ),
+            
               new TextFormField(
                 decoration: new InputDecoration(
                   labelText: 'Penyakit Kronis',
@@ -243,13 +220,11 @@ class _FormUploadState extends State<FormUpload> {
       'name': name,
       'age': age,
       'address': address,
-      'condition_economy': condition_economy,
       'last_education': last_education,
       'history_disease': history_disease,
       'description': description,
       'job': job,
       'featured_image': file,
-      'category_id': 1,
     };
 
     var res = await Network().authData(data, '/post/add');
