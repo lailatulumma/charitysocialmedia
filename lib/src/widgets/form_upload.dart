@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:emphaty/network/api.dart';
+import 'package:emphaty/src/models/kategori.dart';
 import 'package:emphaty/src/screens/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -18,13 +19,16 @@ class _FormUploadState extends State<FormUpload> {
   bool _isLoading = false;
   final formKey = new GlobalKey<FormState>();
 
+  final _kategori = Kategori();
   var name,
-      age,
       address,
-      last_education,
-      history_disease,
       description,
-      job;
+      job,
+      orphaned,
+      disability;
+
+  String _valAges;
+  List _listAges = ["Anak-anak", "Remaja", "Dewasa", "Lansia"];
 
   File imageFile;
 
@@ -133,17 +137,31 @@ class _FormUploadState extends State<FormUpload> {
                   return null;
                 },
               ),
-              new TextFormField(
-                decoration: new InputDecoration(
-                  labelText: 'Age*',
-                ),
-                validator: (val) {
-                  if (val.isEmpty) {
-                    return 'Masukkan Umur';
-                  }
-                  age = val;
-                  return null;
-                },
+              Row(
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(right: 10.0),
+                    child: Text("Usia*", style: TextStyle()),
+                  ),
+                  Expanded(
+                    child: new DropdownButton(
+                      hint: Text("Pilih usia"),
+                      value: _valAges,
+                      items: _listAges.map((value) {
+                        return DropdownMenuItem(
+                          child: Text(value),
+                          value: value,
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          _valAges =
+                              value; //Untuk memberitahu _valFriends bahwa isi nya akan diubah sesuai dengan value yang kita pilih
+                        });
+                      },
+                    ),
+                  )
+                ],
               ),
               new TextFormField(
                 decoration: new InputDecoration(
@@ -159,28 +177,46 @@ class _FormUploadState extends State<FormUpload> {
               ),
               SizedBox(height: 20.0),
               Text('Kategori Bantuan'),
-            
-              new TextFormField(
-                decoration: new InputDecoration(
-                  labelText: 'Penyakit Kronis',
-                ),
-                validator: (val) {
-                  history_disease = val;
-                  return null;
+              new CheckboxListTile(
+                title: new Text('Penyakit Kronis'),
+                value: _kategori.categories[Kategori.KategoriSakit],
+                onChanged: (val) {
+                  setState(
+                    () => _kategori.categories[Kategori.KategoriSakit] = val,
+                  );
+                },
+              ),
+              new CheckboxListTile(
+                title: new Text('Yatim Piatu'),
+                value: _kategori.categories[Kategori.KategoriYatim],
+                onChanged: (val) {
+                  setState(
+                    () => _kategori.categories[Kategori.KategoriYatim] = val,
+                  );
+                },
+              ),
+              new CheckboxListTile(
+                title: new Text('Putus Sekolah'),
+                value: _kategori.categories[Kategori.KategoriPutusSekolah],
+                onChanged: (val) {
+                  setState(
+                    () => _kategori.categories[Kategori.KategoriPutusSekolah] = val,
+                  );
+                },
+              ),
+              CheckboxListTile(
+                title: new Text('Disabilitas'),
+                value: _kategori.categories[Kategori.KategoriDisability],
+                onChanged: (val) {
+                  setState(
+                    () =>
+                        _kategori.categories[Kategori.KategoriDisability] = val,
+                  );
                 },
               ),
               new TextFormField(
                 decoration: new InputDecoration(
-                  labelText: 'Putus Sekolah (Ya/Tidak)*',
-                ),
-                validator: (val) {
-                  last_education = val;
-                  return null;
-                },
-              ),
-              new TextFormField(
-                decoration: new InputDecoration(
-                  labelText: 'Yatim/Piatu (Ya/Tidak)',
+                  labelText: 'Pekerjaan',
                 ),
                 validator: (val) {
                   job = val;
@@ -200,7 +236,6 @@ class _FormUploadState extends State<FormUpload> {
                         child: Text("Tambahkan Foto"),
                       ),
                     ],
-                    
                   ),
                 ),
               ),
@@ -215,13 +250,16 @@ class _FormUploadState extends State<FormUpload> {
     setState(() {
       _isLoading = true;
     });
-    MultipartFile file = await MultipartFile.fromFile(imageFile.path,filename: imageFile.path.split('/').last);
+    MultipartFile file = await MultipartFile.fromFile(imageFile.path,
+        filename: imageFile.path.split('/').last);
     var data = {
       'name': name,
-      'age': age,
+      'age': _valAges,
       'address': address,
-      'last_education': last_education,
-      'history_disease': history_disease,
+      'dropout': _kategori.categories[Kategori.KategoriPutusSekolah],
+      'cronic_pain': _kategori.categories[Kategori.KategoriSakit],
+      'disability': _kategori.categories[Kategori.KategoriDisability],
+      'orphaned': _kategori.categories[Kategori.KategoriYatim],
       'description': description,
       'job': job,
       'featured_image': file,

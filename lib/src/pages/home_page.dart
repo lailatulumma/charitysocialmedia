@@ -1,19 +1,9 @@
-import 'dart:convert';
-import 'package:emphaty/network/api.dart';
-import 'package:emphaty/src/data/list_bantuan.dart';
 import 'package:emphaty/src/data/list_post.dart';
-import 'package:emphaty/src/pages/login_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../widgets/popular_post.dart';
-import '../widgets/post_content.dart';
-import '../widgets/nearest_post.dart';
 import '../widgets/filter_page.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
-//Data
-import '../data/post_data.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -21,25 +11,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String name;
-  @override
-  void initState() {
-    _loadUserData();
-    super.initState();
-  }
-
-  _loadUserData() async {
-    SharedPreferences localStorage = await SharedPreferences.getInstance();
-    var user = jsonDecode(localStorage.getString('user'));
-
-    if (user != null) {
-      setState(() {
-        name = user['name'];
-      });
-    }
-  }
-
-  List<PostData> _posts = posts;
 
   _filterPressed() {
     setState(() {
@@ -87,30 +58,19 @@ class _HomePageState extends State<HomePage> {
             padding: const EdgeInsets.only(
                 right: 10.0, left: 10.0, bottom: 10.0, top: 20.0),
             child: Text(
-              "hi, $name",
+              "hi",
               style: TextStyle(
                 fontSize: 20.0,
                 fontWeight: FontWeight.bold,
               ),
             ),
           ),
-          PopularPost(),
           SizedBox(
             height: 20.0,
           ),
           
           ListPost(),
         ],
-      ),
-    );
-  }
-
-  Widget _buildPostItem(PostData postData) {
-    return Container(
-      margin: EdgeInsets.only(bottom: 20.0),
-      child: PostContent(
-        userId: postData.userId,
-        tanggal: postData.tanggal,
       ),
     );
   }

@@ -34,18 +34,25 @@ class _ListBantuanState extends State<ListBantuan> {
     List<Widget> listWidget = List();
     if (body != null && body['success'] == true) {
       for (int i = 0; i < body['data'].length; i++) {
-        TargetBantuan target = TargetBantuan.fromJson(body['data'][i]);
-        Widget widget = Container(
-          height: MediaQuery.of(context).size.width / 3.2,
-          width: MediaQuery.of(context).size.width / 3.5,
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: NetworkImage(
-                      'http://192.168.8.100:8000/targets/' + target.foto),
-                  fit: BoxFit.cover)),
-        );
-        //child : Image.network('http://192.168.8.100:8000/targets/'+target.foto));
-        listWidget.add(widget);
+        if (body['data'].length != null) {
+          TargetBantuan target = TargetBantuan.fromJson(body['data'][i]);
+          Widget widget = Container(
+            height: MediaQuery.of(context).size.width / 3.2,
+            width: MediaQuery.of(context).size.width / 3.5,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: NetworkImage(
+                        'http://192.168.8.100:8000/targets/' + target.foto),
+                    fit: BoxFit.cover)),
+          );
+          listWidget.add(widget);
+        } else {
+          Widget text = Center(
+            child: Text('Belum ada Post',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0)),
+          );
+          listWidget.add(text);
+        }
       }
     }
     //
