@@ -1,17 +1,17 @@
 import 'dart:convert';
+
 import 'package:emphaty/network/api.dart';
-import 'package:emphaty/src/komunitas/login.dart';
-import 'package:emphaty/src/pages/signup_login.dart';
-import 'package:emphaty/src/screens/main_screen.dart';
+import 'package:emphaty/src/komunitas/signup.dart';
+import 'package:emphaty/src/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginKomunitas extends StatefulWidget {
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _LoginKomunitasState createState() => _LoginKomunitasState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginKomunitasState extends State<LoginKomunitas> {
   bool _isLoading = false;
   final _formKey = GlobalKey<FormState>();
   var email;
@@ -51,9 +51,9 @@ class _LoginPageState extends State<LoginPage> {
                 Container(
                   padding: EdgeInsets.fromLTRB(15.0, 180.0, 0.0, 0.0),
                   child: Text(
-                    'There',
+                    'Komunitas',
                     style:
-                        TextStyle(fontSize: 80.0, fontWeight: FontWeight.bold),
+                        TextStyle(fontSize: 70.0, fontWeight: FontWeight.bold),
                   ),
                 ),
                 Container(
@@ -124,7 +124,7 @@ class _LoginPageState extends State<LoginPage> {
                     padding: EdgeInsets.only(top: 15.0, left: 20.0),
                     child: InkWell(
                       child: Text(
-                        'Login Komunitas',
+                        'Kembali',
                         style: TextStyle(
                           color: Colors.blue[400],
                           fontWeight: FontWeight.bold,
@@ -135,7 +135,7 @@ class _LoginPageState extends State<LoginPage> {
                           Navigator.push(
                               context,
                               new MaterialPageRoute(
-                                  builder: (context) => LoginKomunitas()));
+                                  builder: (context) => LoginPage()));
                         },
                     ),
                   ),
@@ -173,7 +173,7 @@ class _LoginPageState extends State<LoginPage> {
                     children: <Widget>[
                       Text(
                         'Dont have an Account?',
-                        style: TextStyle(letterSpacing: 2.0),
+                        style: TextStyle(letterSpacing: 1.0),
                       ),
                       SizedBox(width: 5.0),
                       InkWell(
@@ -181,10 +181,10 @@ class _LoginPageState extends State<LoginPage> {
                           Navigator.push(
                               context,
                               new MaterialPageRoute(
-                                  builder: (context) => SignUpPage()));
+                                  builder: (context) => SignUpKomunitas()));
                         },
                         child: Text(
-                          'Register',
+                          'Register Komunitas',
                           style: TextStyle(
                             color: Colors.blue[400],
                             fontWeight: FontWeight.bold,
@@ -210,16 +210,16 @@ class _LoginPageState extends State<LoginPage> {
     });
     var data = {'email': email, 'password': password};
 
-    var res = await Network().authData(data, '/login');
+    var res = await Network().authData(data, '/login/komunitas');
     var body = res.data;
     if (body!=null && body['success']==true) {
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       localStorage.setString('token',body['data']['token']);
-      localStorage.setString('user', json.encode(body['user']));
-      Navigator.push(
-        context,
-        new MaterialPageRoute(builder: (context) => MainScreen()),
-      );
+      localStorage.setString('community', json.encode(body['community']));
+      // Navigator.push(
+      //   context,
+      //   new MaterialPageRoute(builder: (context) => MainScreen()),
+      // );
     } else {
       _showMsg(body['message']);
     }
