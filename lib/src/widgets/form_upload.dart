@@ -7,7 +7,6 @@ import 'package:emphaty/src/models/kategori.dart';
 import 'package:emphaty/src/screens/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../models/target_bantuan.dart';
 import 'package:image_picker/image_picker.dart';
 
 class FormUpload extends StatefulWidget {
@@ -257,7 +256,7 @@ class _FormUploadState extends State<FormUpload> {
       'age': _valAges,
       'address': address,
       'dropout': _kategori.categories[Kategori.KategoriPutusSekolah],
-      'cronic_pain': _kategori.categories[Kategori.KategoriSakit],
+      'cronic_paint': _kategori.categories[Kategori.KategoriSakit],
       'disability': _kategori.categories[Kategori.KategoriDisability],
       'orphaned': _kategori.categories[Kategori.KategoriYatim],
       'description': description,
