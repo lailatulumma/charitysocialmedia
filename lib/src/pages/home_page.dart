@@ -1,7 +1,6 @@
 import 'package:emphaty/src/data/list_post.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../widgets/popular_post.dart';
 import '../widgets/filter_page.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 

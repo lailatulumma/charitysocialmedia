@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:emphaty/network/api.dart';
+import 'package:emphaty/src/komunitas/main.dart';
 import 'package:emphaty/src/komunitas/signup.dart';
 import 'package:emphaty/src/pages/login_page.dart';
 import 'package:flutter/material.dart';
@@ -208,7 +209,7 @@ class _LoginKomunitasState extends State<LoginKomunitas> {
     setState(() {
       _isLoading = true;
     });
-    var data = {'email': email, 'password': password};
+    var data = {'email_community': email, 'password': password};
 
     var res = await Network().authData(data, '/login/komunitas');
     var body = res.data;
@@ -216,10 +217,10 @@ class _LoginKomunitasState extends State<LoginKomunitas> {
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       localStorage.setString('token',body['data']['token']);
       localStorage.setString('community', json.encode(body['community']));
-      // Navigator.push(
-      //   context,
-      //   new MaterialPageRoute(builder: (context) => MainScreen()),
-      // );
+      Navigator.push(
+        context,
+        new MaterialPageRoute(builder: (context) => Main()),
+      );
     } else {
       _showMsg(body['message']);
     }

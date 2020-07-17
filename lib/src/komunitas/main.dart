@@ -4,18 +4,12 @@ import 'package:emphaty/src/komunitas/upload.dart';
 import 'package:emphaty/src/komunitas/notification.dart';
 import 'package:flutter/material.dart';
 
-//Pages
-import '../pages/home_page.dart';
-import '../pages/upload_page.dart';
-import '../pages/notification_page.dart';
-import '../pages/profile_page.dart';
-
-class MainScreen extends StatefulWidget {
+class Main extends StatefulWidget {
   @override
-  _MainScreenState createState() => _MainScreenState();
+  _MainState createState() => _MainState();
 }
 
-class _MainScreenState extends State<MainScreen> {
+class _MainState extends State<Main> {
 
   int currentTabIndex = 0; 
 

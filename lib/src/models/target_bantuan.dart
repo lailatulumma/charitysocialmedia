@@ -1,16 +1,16 @@
-import 'package:emphaty/src/models/user_model.dart';
-
-class TargetBantuan extends UserModel{
+class TargetBantuan{
   int id;
   String namauser = '';
   String nama = '';
   String deskripsi = '';
   String alamat = '';
   String foto = '';
-  int usia;
-  String penyakitKronis = '';
-  String putusSekolah = '';
-  String yatimPiatu= '';
+  String usia;
+  String dropout= '';
+  String cronic= '';
+  String orphaned= '';
+  String disability= '';
+  String job = '';
 
 
   TargetBantuan({
@@ -20,10 +20,12 @@ class TargetBantuan extends UserModel{
     this.alamat,
     this.foto,
     this.usia,
-    this.penyakitKronis,
-    this.putusSekolah,
-    this.yatimPiatu,
+    this.dropout,
+    this.cronic,
+    this.orphaned,
+    this.disability,
     this.namauser,
+    this.job,
   });
 
   
@@ -34,11 +36,13 @@ class TargetBantuan extends UserModel{
       nama: map['name'],
       usia: map['age'],
       alamat: map['address'],
-      putusSekolah: map['last_education'],
-      penyakitKronis: map['history_disease'],
       deskripsi: map['description'],
-      yatimPiatu: map['job'],
+      dropout: map['dropout'],
+      cronic: map['cronic_pain'],
+      orphaned: map['orphaned'],
+      disability: map['disability'],
       foto: map['featured_image'],
+      job: map['job'],
       namauser: map['user']['name'],
     );
   }
